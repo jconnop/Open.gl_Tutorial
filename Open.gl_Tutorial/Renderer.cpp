@@ -49,6 +49,12 @@ GLFWwindow *Renderer::getWindow()
 	return this->window;
 }
 
+bool Renderer::LoadShaders()
+{
+
+	return true;
+}
+
 bool Renderer::LoadScene()
 {
 

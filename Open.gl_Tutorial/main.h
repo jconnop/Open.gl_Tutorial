@@ -8,6 +8,7 @@
 
 // Other library headers
 #include <GLFW/glfw3.h>
+#include <string>
 
 // Project headers
 #include "Renderer.h"

@@ -12,7 +12,7 @@ Game::~Game()
 
 bool Game::Initialise()
 {
-	if (this->renderer.LoadScene())
+	if (this->renderer.LoadShaders() && this->renderer.LoadScene())
 	{
 		return true;
 	}
