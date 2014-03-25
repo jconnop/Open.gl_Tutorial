@@ -20,6 +20,7 @@ private:
 protected:
 	GLFWwindow *window;
 	std::map <std::string, GLuint> vaos;
+	std::map <std::string, GLuint> vbos;
 	std::map <std::string, GLuint> vertex_shaders;
 	std::map <std::string, GLuint> fragment_shaders;
 };

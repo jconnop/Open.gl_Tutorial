@@ -75,12 +75,47 @@ bool Renderer::LoadShaders()
 
 bool Renderer::LoadScene()
 {
+	// Create Vertex Array Object
+	GLuint vao;
+	glGenVertexArrays(1, &vao);
+	this->vaos["firstVAO"] = vao;
+	glBindVertexArray(vao);
+
+	// Create a Vertex Buffer Object and copy the vertex data to it
+	GLuint vbo;
+	glGenBuffers(1, &vbo);
+	this->vbos["firstVBO"] = vbo;
+
+
+	float vertices[] = {
+		0.0f, 0.5f, // Vertex 1 (X, Y)
+		0.5f, -0.5f, // Vertex 2 (X, Y)
+		-0.5f, -0.5f  // Vertex 3 (X, Y)
+	};
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+
+	// Combine shaders into a program
+	GLuint shaderProgram = glCreateProgram();
+	glAttachShader(shaderProgram, this->vertex_shaders["basicVertex"]);
+	glAttachShader(shaderProgram, this->fragment_shaders["basicFragment"]);
+	glBindFragDataLocation(shaderProgram, 0, "outColor");
+	glLinkProgram(shaderProgram);
+	glUseProgram(shaderProgram);
+
+	// Link vertex attribute or some such?
+	GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
+	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(posAttrib);
 
 	return true;
 }
 
 bool Renderer::RenderScene()
 {
+	glDrawArrays(GL_TRIANGLES, 0, 3);
+
 	return true;
 }
 

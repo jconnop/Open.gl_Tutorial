@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Resource Files\Fragment Shaders">
+      <UniqueIdentifier>{0f4b5819-8fdf-4d90-b6b2-8a5c75c3a0dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Vertex Shaders">
+      <UniqueIdentifier>{854cda28-6fdc-4759-acc2-a7b55583e33e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -41,5 +47,13 @@
     <ClInclude Include="Util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\Fragment\basicFragment.glsl">
+      <Filter>Resource Files\Fragment Shaders</Filter>
+    </None>
+    <None Include="Shaders\Vertex\basicVertex.glsl">
+      <Filter>Resource Files\Vertex Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
