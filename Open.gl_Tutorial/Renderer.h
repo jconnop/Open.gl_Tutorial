@@ -22,6 +22,7 @@ protected:
 	GLFWwindow *window;
 	std::map <std::string, GLuint> vaos;
 	std::map <std::string, GLuint> vbos;
+	std::map <std::string, GLuint> ebos;
 	std::map <std::string, GLuint> vertex_shaders;
 	std::map <std::string, GLuint> fragment_shaders;
 	std::map <std::string, GLint> uniforms;

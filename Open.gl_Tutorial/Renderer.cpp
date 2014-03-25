@@ -40,6 +40,9 @@ GLFWwindow * Renderer::InitWindow(int glMajor, int glMinor, bool fullscreen, int
 	glewExperimental = GL_TRUE;
 	glewInit();
 
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+
 	this->window = window;
 	return window;
 }
@@ -86,14 +89,28 @@ bool Renderer::LoadScene()
 	glGenBuffers(1, &vbo);
 	this->vbos["firstVBO"] = vbo;
 
+	GLuint ebo;
+	glGenBuffers(1, &ebo);
+	this->ebos["firstEBO"] = ebo;
 
 	float vertices[] = {
-		0.0f, 0.5f, 1.0f, 0.0f, 0.0f, // Vertex 1 (X, Y, r, g, b)
-		0.5f, -0.5f, 0.0f, 1.0f, 0.0f, // Vertex 2 (X, Y, r, g, b)
-		-0.5f, -0.5f, 0.0f, 0.0f, 1.0f  // Vertex 3 (X, Y, r, g, b)
+		-0.5f, 0.5f, 1.0f, 0.0f, 0.0f, // Top left (X, Y, r, g, b)
+		0.5f, 0.5f, 0.0f, 1.0f, 0.0f, // Top right (X, Y, r, g, b)
+		0.5f, -0.5f, 0.0f, 0.0f, 1.0f, // Bottom right (X, Y, r, g, b)
+		-0.5f, -0.5f, 1.0f, 1.0f, 1.0f  // Bottom left (X, Y, r, g, b)
 	};
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	GLuint elements[] =
+	{
+		0, 1, 2,
+		2, 3, 0
+	};
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
+
 
 
 	// Combine shaders into a program
@@ -114,22 +131,14 @@ bool Renderer::LoadScene()
 	glVertexAttribPointer(colorAttrib, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(2 * sizeof(float)));
 
 
-	// Setup uniforms
-	GLint triangleColor = glGetUniformLocation(shaderProgram, "triangleColor");
-	this->uniforms["triangleColor"] = triangleColor;
-
 	return true;
 }
 
 bool Renderer::RenderScene()
 {
-	float time = (float)clock() / (float)CLOCKS_PER_SEC;
-	glUniform3f(this->uniforms["triangleColor"],
-		(sin(time) + 1.0f) / 2.0f,
-		0.0f,
-		0.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 	return true;
 }
