@@ -88,9 +88,9 @@ bool Renderer::LoadScene()
 
 
 	float vertices[] = {
-		0.0f, 0.5f, // Vertex 1 (X, Y)
-		0.5f, -0.5f, // Vertex 2 (X, Y)
-		-0.5f, -0.5f  // Vertex 3 (X, Y)
+		0.0f, 0.5f, 1.0f, 0.0f, 0.0f, // Vertex 1 (X, Y, r, g, b)
+		0.5f, -0.5f, 0.0f, 1.0f, 0.0f, // Vertex 2 (X, Y, r, g, b)
+		-0.5f, -0.5f, 0.0f, 0.0f, 1.0f  // Vertex 3 (X, Y, r, g, b)
 	};
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
@@ -106,8 +106,12 @@ bool Renderer::LoadScene()
 
 	// Link vertex attribute or some such?
 	GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
-	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(posAttrib);
+	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 5*sizeof(float), 0);
+
+	GLint colorAttrib = glGetAttribLocation(shaderProgram, "color");
+	glEnableVertexAttribArray(colorAttrib);
+	glVertexAttribPointer(colorAttrib, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(2 * sizeof(float)));
 
 
 	// Setup uniforms
