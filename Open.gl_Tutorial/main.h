@@ -9,9 +9,11 @@
 // Other library headers
 #include <GLFW/glfw3.h>
 #include <string>
+#include <iostream>
 
 // Project headers
 #include "Renderer.h"
 #include "Game.h"
+#include "Util.h"
 
 int main();

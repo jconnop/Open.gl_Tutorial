@@ -8,5 +8,8 @@ int main()
 		game.MainLoop();
 	}
 
+	std::string blocker;
+	//std::cin >> blocker;
+
 	return 0;
 }

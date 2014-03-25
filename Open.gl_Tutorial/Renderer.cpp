@@ -51,6 +51,24 @@ GLFWwindow *Renderer::getWindow()
 
 bool Renderer::LoadShaders()
 {
+	// Load vertex shader. Revise to scale
+	GLuint vertexShader;
+	if (!this->loadAndCompileShader("Shaders/Vertex/basicVertex.glsl", GL_VERTEX_SHADER, &vertexShader))
+	{
+		std::cout << "ERROR: Failed to load and compile basicVertex.glsl" << std::endl;
+		return false;
+	}
+	this->vertex_shaders["basicVertex"] = vertexShader;
+
+	// Load fragment shader. Revise to scale
+	GLuint fragmentShader;
+	if (!this->loadAndCompileShader("Shaders/Fragment/basicFragment.glsl", GL_FRAGMENT_SHADER, &fragmentShader))
+	{
+		std::cout << "ERROR: Failed to load and compile basicFragment.glsl" << std::endl;
+		return false;
+	}
+	this->fragment_shaders["basicFragment"] = fragmentShader;
+
 
 	return true;
 }
@@ -63,5 +81,24 @@ bool Renderer::LoadScene()
 
 bool Renderer::RenderScene()
 {
+	return true;
+}
+
+bool Renderer::loadAndCompileShader(const std::string relativePath, const GLenum type, GLuint *shader)
+{
+	// Load file
+	std::string file = Util::readTextFile(relativePath);
+	if (!file.compare(std::string(""))){
+		std::cerr << "ERROR: Failed to load " << relativePath << " into string" << std::endl;
+		return false;
+	}
+	const char * fileContents = file.c_str();
+
+	// Compile shader
+	*shader = glCreateShader(type);
+	glShaderSource(*shader, 1, &fileContents, NULL);
+	glCompileShader(*shader);
+
+	// TODO: Check for errors
 	return true;
 }
