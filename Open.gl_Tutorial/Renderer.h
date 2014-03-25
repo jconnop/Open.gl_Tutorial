@@ -4,6 +4,7 @@ Renderer is a class that wraps all the OpenGL functionality
 
 #include "main.h"
 #include <map>
+#include <ctime>
 
 class Renderer
 {
@@ -23,4 +24,5 @@ protected:
 	std::map <std::string, GLuint> vbos;
 	std::map <std::string, GLuint> vertex_shaders;
 	std::map <std::string, GLuint> fragment_shaders;
+	std::map <std::string, GLint> uniforms;
 };

@@ -109,11 +109,22 @@ bool Renderer::LoadScene()
 	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(posAttrib);
 
+
+	// Setup uniforms
+	GLint triangleColor = glGetUniformLocation(shaderProgram, "triangleColor");
+	this->uniforms["triangleColor"] = triangleColor;
+
 	return true;
 }
 
 bool Renderer::RenderScene()
 {
+	float time = (float)clock() / (float)CLOCKS_PER_SEC;
+	glUniform3f(this->uniforms["triangleColor"],
+		(sin(time) + 1.0f) / 2.0f,
+		0.0f,
+		0.0f);
+
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 
 	return true;
